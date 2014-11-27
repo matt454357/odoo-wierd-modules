@@ -1,0 +1,79 @@
+-
+  In order to test the PDF reports defined on an invoice, we will validate the check first.
+-
+  I Validate checkl by clicking on Validate button
+-
+  !workflow {model: account.voucher, action: proforma_voucher, ref: account_checkvoucher_01}
+-
+   I check that check has been posted and in posted state.
+-
+  !assert {model: account.voucher, id: account_checkvoucher_01}:
+    - state == 'posted'
+-
+  I create a check printing wizard with next default check number.
+-
+  !record {model: account.check.write, id: account_check_write_top_01}:
+    check_number: 1
+    force_number: False
+    force_overwrite: False
+-
+  I execute the print check wizrd to assign nunber to the check and will pirnt the default(top) report return by the wizard action.
+-
+  !python {model: account.check.write}: |
+    context.update({'active_model': 'account.voucher', 'active_id':ref('account_checkvoucher_01'), 'active_ids': [ref('account_checkvoucher_01')]})
+    report = self.print_check_write(cr, uid, [ref('account_check_write_top_01')], context=context)
+    import os
+    import openerp.report
+    from openerp import tools
+    assert report.get('report_name') == "account.print.check.top", 'expected check has to be Top check(account.print.check.top).'
+    data, format = openerp.report.render_report(cr, uid, [ref('account_checkvoucher_01')], report.get('report_name'), {}, {})
+    if tools.config['test_report_directory']:
+        file(os.path.join(tools.config['test_report_directory'], 'account-report_check_top.'+format), 'wb+').write(data)
+-
+  I verify that check has been assigned a number.
+-
+  !assert {model: account.voucher, id: account_checkvoucher_01}:
+    - check_number != False
+-
+  In order to test the print top check report,  I call Print Check Button of the check, which returns the report action using which will pirnt the default(top) report.
+-
+  !python {model: account.voucher}: |
+    context.update({'active_model': 'account.voucher', 'active_id':ref('account_checkvoucher_01'), 'active_ids': [ref('account_checkvoucher_01')]})
+    report = self.print_check(cr, uid, [ref("account_checkvoucher_01")], context)
+    assert report.get('report_name') == "account.print.check.top", 'expected check has to be Top check(account.print.check.top).'
+    from openerp import tools
+    data, format = openerp.report.render_report(cr, uid, [ref('account_checkvoucher_01')], report.get('report_name'), {}, {})
+    if tools.config['test_report_directory']:
+        file(os.path.join(tools.config['test_report_directory'], 'account-report_check_top.'+format), 'wb+').write(data)
+-
+  I set the default company check layput to Check on middle.
+-
+  !python {model: res.company}: |
+    self.write(cr, uid, [ref("base.main_company")], {'check_layout': 'middle'})
+-
+  In order to test the print middle check report,  I call Print Check Button of the check, which returns the report action using which will pirnt the default(middle) report.
+-
+  !python {model: account.voucher}: |
+    context.update({'active_model': 'account.voucher', 'active_id':ref('account_checkvoucher_01'), 'active_ids': [ref('account_checkvoucher_01')]})
+    report = self.print_check(cr, uid, [ref("account_checkvoucher_01")], context)
+    assert report.get('report_name') == "account.print.check.middle", 'expected check has to be Middle check(account.print.check.middle).'
+    from openerp import tools
+    data, format = openerp.report.render_report(cr, uid, [ref('account_checkvoucher_01')], report.get('report_name'), {}, {})
+    if tools.config['test_report_directory']:
+        file(os.path.join(tools.config['test_report_directory'], 'account-report_check_middle.'+format), 'wb+').write(data)
+-
+  I set the default company check layput to Check on bottom'.
+-
+  !python {model: res.company}: |
+    self.write(cr, uid, [ref("base.main_company")], {'check_layout': 'bottom'})
+-
+  In order to test the print bottom check report,  I call Print Check Button of the check, which returns the report action using which will pirnt the default(bottom) report.
+-
+  !python {model: account.voucher}: |
+    context.update({'active_model': 'account.voucher', 'active_id':ref('account_checkvoucher_01'), 'active_ids': [ref('account_checkvoucher_01')]})
+    report = self.print_check(cr, uid, [ref("account_checkvoucher_01")], context)
+    assert report.get('report_name') == "account.print.check.bottom", 'expected check has to be Bottom check(account.print.check.bottom).'
+    from openerp import tools
+    data, format = openerp.report.render_report(cr, uid, [ref('account_checkvoucher_01')], report.get('report_name'), {}, {})
+    if tools.config['test_report_directory']:
+        file(os.path.join(tools.config['test_report_directory'], 'account-report_check_bottom.'+format), 'wb+').write(data)
