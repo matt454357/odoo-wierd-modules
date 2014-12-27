@@ -64,7 +64,7 @@ class TxPaypal(osv.Model):
         return txn_data
 
     def _paypal_form_get_tx_from_data(self, cr, uid, data, context=None):
-        tx_ids = self.pool['payment.transaction'].search(cr, uid, [('reference', '=', reference)], context=context)
+        tx_ids = self.pool['payment.transaction'].search(cr, uid, [('reference', '=', data.get('item_number'))], context=context)
         if not tx_ids:
             new_txn = self._prepare_new_txn(cr, uid, data, context=context)
             new_txn_id = self.create(cr, uid, new_txn, context=context)
