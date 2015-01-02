@@ -1,0 +1,108 @@
+/* 
+ * 
+ * Disclamer: I'm a total css novice...
+ * 
+ * The page seems to inherit some margins that I can't control:
+ *   top   = 10cm (38px, 0.40in)
+ *   left  = 10cm (38px, 0.40in)
+ *   right = 10cm (38px, 0.40in)
+ * 
+ * The problem appears to be related to the conversion to pdf, possibly a 
+ * parameter being passed to wkhtmltopdf?  There is no extra margin when the 
+ * report is rendered to html.
+ * 
+ * The big problem with these margins is that I can't print close enough to the
+ * edge of the page.  It is working for pre-printed checks, but if you want to
+ * print the check number in the far upper right hand corner, you will be 
+ * limited to these margins.
+ * 
+ * I attempted to move stuff closer to the edge by setting negative margin 
+ * values.  That only caused the stuff around the edge of the page to be 
+ * cropped (like the overflow:hidden; command).
+ * 
+ * The inch positioning isn't accurate.  I couldn't just measure the positions 
+ * with my ruler, and insert the dimension here.  I had to tweak the positions 
+ * with some trial and error to get things in the correct positions.
+ * 
+*/
+
+.ckus_page {
+  position: relative;
+  top: 0.00in;
+  left: 0.00in;
+  right: 0.00in;
+  bottom: 0.00in;
+}
+
+.ckus_part2 {
+  position: absolute;
+  left: 0.00in;
+  top: 3.98in;
+}
+
+.ckus_part3 {
+  position: absolute;
+  left: 0.00in;
+  top: 8.10in;
+}
+
+.ckus_date1 {
+  position: absolute;
+  float: right;
+  width: 1.19in;
+  top: 0.45in;
+  right: 0.00in;
+  font-size: 12pt;
+  text-align: center;
+  white-space: nowrap;
+}
+.ckus_pay_name {
+  position: absolute;
+  float: left;
+  width: 5.50in;
+  top: 1.05in;
+  left: 0.73in;
+  font-size: 12pt;
+  text-align: left;
+  white-space: nowrap;
+}
+.ckus_amount {
+  position: absolute;
+  float: right;
+  width: 1.13in;
+  top: 1.05in;
+  right: 0.00in;
+  font-size: 12pt;
+  text-align: left;
+  white-space: nowrap;
+}
+.ckus_word_amt {
+  position: absolute;
+  top: 1.42in;
+  left: 0.00in;
+  font-size: 12pt;
+  text-align: left;
+  font-weight: bold;
+  white-space: nowrap;
+}
+.ckus_address {
+  position: absolute;
+  height: 4em;
+  top: 1.80in;
+  left: 0.60in;
+  font-size: 12pt;
+  text-align: left;
+  white-space: nowrap;
+}
+.ckus_memo {
+  position: absolute;
+  top: 2.00in;
+  right: 0.00in;
+  float: right;
+  width: 3.5in;
+  font-size: 10pt;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+}
+

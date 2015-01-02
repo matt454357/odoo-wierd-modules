@@ -1,19 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
 <data>
-<template id="report_check_os">
+<template id="report_check_us">
+
+    <!-- <link rel="stylesheet" href="/report_check_us/static/src/css/report_check_us.css" /> -->
+    <!--
+        I tried to link the css file here, but it seemed to have no effect. 
+        I really don't know how to include custom css.  Maybe I just had 
+        a bad path.
+        
+        This github issue seems to indicate that you can't link it here, anyway:
+            https://github.com/odoo/odoo/issues/4359
+     -->
 
     <style type="text/css">
-        /*
+        /* 
+         * Disclamer: I'm a total css novice...
          * 
-         * The page seems to inherit some margin that I can't control:
-         *   top   = 10cm (35px, 0.40in)
-         *   left  = 10cm (35px, 0.40in)
-         *   right = 10cm (35px, 0.40in)
+         * The page seems to inherit some margins that I can't control:
+         *   top   = 10cm (38px, 0.40in)
+         *   left  = 10cm (38px, 0.40in)
+         *   right = 10cm (38px, 0.40in)
+         * 
+         * The problem appears to be related to the conversion to pdf, possibly a 
+         * parameter being passed to wkhtmltopdf?  There is no extra margin when the 
+         * report is rendered to html.
+         * 
+         * The big problem with these margins is that I can't print close enough to the
+         * edge of the page.  It is working for pre-printed checks, but if you want to
+         * print the check number in the far upper right hand corner, you will be 
+         * limited to these margins.
+         * 
+         * I attempted to move stuff closer to the edge by setting negative margin 
+         * values.  That only caused the content around the edge of the page to be 
+         * cropped (like the overflow:hidden; command would do).
+         * 
+         * The inch positioning isn't accurate.  I couldn't just measure the positions 
+         * with my ruler, and insert the dimension here.  I had to tweak the positions 
+         * with some trial and error to get things in the correct positions.
          * 
         */
         
-        .rcos_page {
+        .ckus_page {
           position: relative;
           top: 0.00in;
           left: 0.00in;
@@ -21,19 +49,19 @@
           bottom: 0.00in;
         }
         
-        .rcos_part2 {
+        .ckus_part2 {
           position: absolute;
           left: 0.00in;
           top: 3.98in;
         }
         
-        .rcos_part3 {
+        .ckus_part3 {
           position: absolute;
           left: 0.00in;
           top: 8.10in;
         }
         
-        .rcos_date1 {
+        .ckus_date1 {
           position: absolute;
           float: right;
           width: 1.19in;
@@ -43,7 +71,7 @@
           text-align: center;
           white-space: nowrap;
         }
-        .rcos_pay_name {
+        .ckus_pay_name {
           position: absolute;
           float: left;
           width: 5.50in;
@@ -53,7 +81,7 @@
           text-align: left;
           white-space: nowrap;
        }
-        .rcos_amount {
+        .ckus_amount {
           position: absolute;
           float: right;
           width: 1.13in;
@@ -63,7 +91,7 @@
           text-align: left;
           white-space: nowrap;
         }
-        .rcos_word_amt {
+        .ckus_word_amt {
           position: absolute;
           top: 1.42in;
           left: 0.00in;
@@ -72,17 +100,16 @@
           font-weight: bold;
           white-space: nowrap;
         }
-        .rcos_address {
+        .ckus_address {
           position: absolute;
           height: 4em;
           top: 1.80in;
           left: 0.60in;
           font-size: 12pt;
           text-align: left;
-          font-weight: bold;
           white-space: nowrap;
         }
-        .rcos_memo {
+        .ckus_memo {
           position: absolute;
           top: 2.00in;
           right: 0.00in;
@@ -90,7 +117,6 @@
           width: 3.5in;
           font-size: 10pt;
           text-align: left;
-          font-weight: bold;
           white-space: nowrap;
           overflow: hidden;
         }
@@ -98,25 +124,25 @@
 
     <t t-call="report.html_container">
         <t t-foreach="docs" t-as="o">
-            <div class="page rcos_page">
+            <div class="page ckus_page">
                 
-                <span class="rcos_date1" t-esc="formatLang(o.date , date=True)"/>
+                <span class="ckus_date1" t-esc="formatLang(o.date , date=True)"/>
                 <br/>
                 
-                <span class="rcos_pay_name" t-field="o.partner_id"
+                <span class="ckus_pay_name" t-field="o.partner_id"
                     t-field-options='{"widget": "contact", "fields": ["name"], "no_marker": true, "no_tag_br": true}' />
-                <span class="rcos_amount" t-field="o.amount" /><br/>
+                <span class="ckus_amount" t-field="o.amount" /><br/>
                     
-                <span class="rcos_word_amt" t-esc="fill_stars(o.amount_in_word)"/><br/>
+                <span class="ckus_word_amt" t-esc="fill_stars(o.amount_in_word)"/><br/>
 
-                <address class="rcos_address" t-field="o.partner_id"
+                <address class="ckus_address" t-field="o.partner_id"
                     t-field-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}' /><br/>
 
-                <span class="rcos_memo"><span style="font-size:12pt">MEMO</span><br/><span t-esc="o.name"/></span>
+                <span class="ckus_memo"><span style="font-size:12pt">MEMO</span><br/><span t-esc="o.name"/></span>
 
 
 
-                <div class="rcos_part2">
+                <div class="ckus_part2">
 
                     <div class="row">
                         <div class="col-xs-3">
@@ -164,7 +190,7 @@
 
 
 
-                <div class="rcos_part3">
+                <div class="ckus_part3">
 
                     <div class="row">
                         <div class="col-xs-3">

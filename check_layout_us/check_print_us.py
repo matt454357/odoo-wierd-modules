@@ -24,9 +24,9 @@ from openerp.osv import osv
 from openerp.report import report_sxw
 
 
-class report_print_check_os(report_sxw.rml_parse):
+class report_print_check_us(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
-        super(report_print_check_os, self).__init__(cr, uid, name, context)
+        super(report_print_check_us, self).__init__(cr, uid, name, context)
         self.number_lines = 0
         self.number_add = 0
         self.localcontext.update({
@@ -67,9 +67,9 @@ class report_print_check_os(report_sxw.rml_parse):
 
 
 class report_check(osv.AbstractModel):
-    _name = 'report.check_layout_opensupplies.report_check_os'
+    _name = 'report.check_layout_us.report_check_us'
     _inherit = 'report.abstract_report'
-    _template = 'check_layout_opensupplies.report_check_os'
-    _wrapped_report_class = report_print_check_os
+    _template = 'check_layout_us.report_check_us'
+    _wrapped_report_class = report_print_check_us
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

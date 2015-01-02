@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-        <record id="paperformat_check_os" model="report.paperformat">
+        <record id="paperformat_check_us" model="report.paperformat">
             <field name="name">US Letter Check</field>
             <field name="default" eval="False" />
             <field name="format">Letter</field>
