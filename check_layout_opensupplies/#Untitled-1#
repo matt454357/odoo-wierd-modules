@@ -1,0 +1,88 @@
+    <style type="text/css">
+        /*
+         * 
+         * The page seems to inherit some margin that I can't control:
+         *   top   = 10cm (35px)
+         *   left  = 10cm (35px)
+         *   right = 10cm (35px)
+         * 
+        */
+        
+        .rcos_part2 {
+          position:absolute;
+          left:0px;
+          top:350px;
+        }
+        
+        .rcos_part3 {
+          position:absolute;
+          left:0px;
+          top:660px;
+        }
+        
+        .rcos_page {
+          position:absolute;
+          top:0px;
+          left:0px;
+          right:0px;
+          bottom:0px;
+        }
+        .rcos_date1 {
+          position:absolute;
+          float:right;
+          width:100px;
+          top:34px;
+          right:0px;
+          font-size: 10pt;
+          text-align:center;
+        }
+        .rcos_name {
+          position:absolute;
+          float:left;
+          width:500px;
+          top:78px;
+          left:68px;
+          font-size: 10pt;
+          text-align:center;
+        }
+        .rcos_amount {
+          position:absolute;
+          float:right;
+          width:100px;
+          top:78px;
+          right:0px;
+          font-size: 10pt;
+          text-align:left;
+        }
+        .rcos_word_amt {
+          position:absolute;
+          float:left;
+          width:500px;
+          top:108px;
+          left:0px;
+          font-size: 10pt;
+          text-align:center;
+          font-weight: bold;
+        }
+        .rcos_address {
+          position:absolute;
+          float:left;
+          width:220px;
+          top:145px;
+          left:20px;
+          font-size: 10pt;
+          text-align:center;
+          font-weight: bold;
+        }
+        .rcos_memo {
+          position:absolute;
+          float:right;
+          width:400px;
+          top:216px;
+          left:0px;
+          font-size: 10pt;
+          text-align:center;
+          font-weight: bold;
+        }
+    </style>
+

@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+<template id="report_check_os">
+
+    <style type="text/css">
+        /*
+         * 
+         * The page seems to inherit some margin that I can't control:
+         *   top   = 10cm (35px, 0.40in)
+         *   left  = 10cm (35px, 0.40in)
+         *   right = 10cm (35px, 0.40in)
+         * 
+        */
+        
+        .rcos_page {
+          position: relative;
+          top: 0.00in;
+          left: 0.00in;
+          right: 0.00in;
+          bottom: 0.00in;
+        }
+        
+        .rcos_part2 {
+          position: absolute;
+          left: 0.00in;
+          top: 3.98in;
+        }
+        
+        .rcos_part3 {
+          position: absolute;
+          left: 0.00in;
+          top: 8.10in;
+        }
+        
+        .rcos_date1 {
+          position: absolute;
+          float: right;
+          width: 1.19in;
+          top: 0.45in;
+          right: 0.00in;
+          font-size: 12pt;
+          text-align: center;
+          white-space: nowrap;
+        }
+        .rcos_pay_name {
+          position: absolute;
+          float: left;
+          width: 5.50in;
+          top: 1.05in;
+          left: 0.73in;
+          font-size: 12pt;
+          text-align: left;
+          white-space: nowrap;
+       }
+        .rcos_amount {
+          position: absolute;
+          float: right;
+          width: 1.13in;
+          top: 1.05in;
+          right: 0.00in;
+          font-size: 12pt;
+          text-align: left;
+          white-space: nowrap;
+        }
+        .rcos_word_amt {
+          position: absolute;
+          top: 1.42in;
+          left: 0.00in;
+          font-size: 12pt;
+          text-align: left;
+          font-weight: bold;
+          white-space: nowrap;
+        }
+        .rcos_address {
+          position: absolute;
+          height: 4em;
+          top: 1.80in;
+          left: 0.60in;
+          font-size: 12pt;
+          text-align: left;
+          font-weight: bold;
+          white-space: nowrap;
+        }
+        .rcos_memo {
+          position: absolute;
+          top: 2.00in;
+          right: 0.00in;
+          float: right;
+          width: 3.5in;
+          font-size: 10pt;
+          text-align: left;
+          font-weight: bold;
+          white-space: nowrap;
+          overflow: hidden;
+        }
+    </style>
+
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="o">
+            <div class="page rcos_page">
+                
+                <span class="rcos_date1" t-esc="formatLang(o.date , date=True)"/>
+                <br/>
+                
+                <span class="rcos_pay_name" t-field="o.partner_id"
+                    t-field-options='{"widget": "contact", "fields": ["name"], "no_marker": true, "no_tag_br": true}' />
+                <span class="rcos_amount" t-field="o.amount" /><br/>
+                    
+                <span class="rcos_word_amt" t-esc="fill_stars(o.amount_in_word)"/><br/>
+
+                <address class="rcos_address" t-field="o.partner_id"
+                    t-field-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}' /><br/>
+
+                <span class="rcos_memo"><span style="font-size:12pt">MEMO</span><br/><span t-esc="o.name"/></span>
+
+
+
+                <div class="rcos_part2">
+
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <span t-field="o.partner_id"
+                                t-field-options='{"widget": "contact", "fields": ["name"], "no_marker": true, "no_tag_br": true}' />
+                        </div>
+                        <div class="col-xs-3">
+                            <span t-esc="formatLang(o.date , date=True)"/>
+                        </div>
+                        <div class="col-xs-3">
+                            <strong style="font-size:10pt">Check Amount:</strong>
+                            <span t-field="o.amount"
+                            	t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                        </div>
+                    </div>
+
+                    <table class="table table-condensed">
+                        <thead>
+                        <tr>
+                            <th style="text-align:left;">Due Date</th>
+                            <th style="text-align:left;">Description</th>
+                            <th style="text-align:right;">Original Amount</th>
+                            <th style="text-align:right;">Open Balance</th>
+                            <th style="text-align:right;">Discount</th>
+                            <th style="text-align:right;">Payment</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr t-foreach="get_lines(o.line_dr_ids)" t-as="l">
+                            <td class="text-left">
+                                <p t-if="l['date_due']">
+                                    <span t-esc="formatLang(l['date_due'], date=True)"/>
+                                </p>
+                            </td>
+                            <td class="text-left"><span t-esc="l['name']"/></td>
+                            <td class="text-right"><span t-esc="formatLang(l['amount_original'])"/></td>
+                            <td class="text-right"><span t-esc="formatLang(l['amount_unreconciled'])"/></td>
+                            <td class="text-right"></td>
+                            <td class="text-right"><span t-esc="formatLang(l['amount'])"/></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                
+                </div>
+
+
+
+                <div class="rcos_part3">
+
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <span t-field="o.partner_id"
+                                t-field-options='{"widget": "contact", "fields": ["name"], "no_marker": true, "no_tag_br": true}' />
+                        </div>
+                        <div class="col-xs-3">
+                            <span t-esc="formatLang(o.date , date=True)"/>
+                        </div>
+                        <div class="col-xs-3">
+                            <strong style="font-size:10pt">Check Amount:</strong>
+                            <span t-field="o.amount"
+                            	t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                        </div>
+                    </div>
+
+                    <table class="table table-condensed">
+                        <thead>
+                        <tr>
+                            <th style="text-align:left;">Due Date</th>
+                            <th style="text-align:left;">Description</th>
+                            <th style="text-align:right;">Original Amount</th>
+                            <th style="text-align:right;">Open Balance</th>
+                            <th style="text-align:right;">Discount</th>
+                            <th style="text-align:right;">Payment</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr t-foreach="get_lines(o.line_dr_ids)" t-as="l">
+                            <td class="text-left">
+                                <p t-if="l['date_due']">
+                                    <span t-esc="formatLang(l['date_due'], date=True)"/>
+                                </p>
+                            </td>
+                            <td class="text-left"><span t-esc="l['name']"/></td>
+                            <td class="text-right"><span t-esc="formatLang(l['amount_original'])"/></td>
+                            <td class="text-right"><span t-esc="formatLang(l['amount_unreconciled'])"/></td>
+                            <td class="text-right"></td>
+                            <td class="text-right"><span t-esc="formatLang(l['amount'])"/></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                
+                </div>
+
+
+
+            </div>
+        </t>
+    </t>
+</template>
+</data>
+</openerp>

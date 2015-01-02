@@ -150,25 +150,25 @@ class report_print_check(report_sxw.rml_parse):
         return pages
 
 report_sxw.report_sxw(
-     'report.account.print.check.top',
+     'report.account.print.check.top.jam',
      'account.voucher',
-     'addons/account_check_writing/report/check_print_top.rml',
+     'account_check_writing_jam/report/check_print_top.rml',
      parser=report_print_check,
      header=False
 )
 
 report_sxw.report_sxw(
-    'report.account.print.check.middle',
+    'report.account.print.check.middle.jam',
     'account.voucher',
-    'addons/account_check_writing/report/check_print_middle.rml',
+    'account_check_writing_jam/report/check_print_middle.rml',
     parser=report_print_check,
     header=False
 )
 
 report_sxw.report_sxw(
-    'report.account.print.check.bottom',
+    'report.account.print.check.bottom.jam',
     'account.voucher',
-    'addons/account_check_writing/report/check_print_bottom.rml',
+    'account_check_writing_jam/report/check_print_bottom.rml',
     parser=report_print_check,
     header=False
 )

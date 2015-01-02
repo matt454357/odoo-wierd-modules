@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <report
+            id="action_report_check_os" 
+            model="account.voucher" 
+            string="Check-OS"
+            report_type="qweb-pdf"
+            name="check_layout_opensupplies.report_check_os" 
+            file="check_layout_opensupplies.report_check_os" 
+        />
+
+        <record id="action_report_check_os" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="check_layout_opensupplies.paperformat_check_os"/>
+        </record>
+    </data>
+</openerp>

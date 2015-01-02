@@ -55,7 +55,7 @@ class account_check_write(osv.TransientModel):
             sequence_id = journal_id.check_sequence_id.id
         elif not journal_id and tolerate_noid:
             #if journal has no sequence we can use generic check sequence.
-            ref, sequence_id = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'account_check_writing', 'seq_check_number')
+            ref, sequence_id = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'account_check_writing_jam', 'seq_check_number')
         else:
             raise osv.except_osv(_('Error!'), _("No check number sequence defined for the journal : %s") % (journal_id.name))
         return sequence_id

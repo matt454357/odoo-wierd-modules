@@ -7,8 +7,8 @@ class account_invoice(models.Model):
     @api.depends('number')
     def _compute_has_txn(self):
         if self.number:
-            test = self.env['payment.transaction'].search([('reference','=',self.number)], limit=1)
-            if test:
+            trans_id = self.env['payment.transaction'].search([('reference','=',self.number)], limit=1)
+            if trans_id:
                 self.txn_exists = True
 
     txn_exists = fields.Boolean(string='Online Txn', readonly=True,

@@ -126,9 +126,9 @@ class account_voucher(osv.Model):
         value = {}
         model_data = self.pool.get('ir.model.data')
         check_layout_report = {
-            'top': 'account.print.check.top',
-            'middle': 'account.print.check.middle',
-            'bottom': 'account.print.check.bottom',
+            'top': 'account.print.check.top.jam',
+            'middle': 'account.print.check.middle.jam',
+            'bottom': 'account.print.check.bottom.jam',
         }
         check = self.browse(cr, uid, ids[0], context=context)
         if check.check_number or check.journal_id.use_preprint_check:
@@ -145,7 +145,7 @@ class account_voucher(osv.Model):
                 'nodestroy': True
             }
         else:
-            form_view = model_data.get_object_reference(cr, uid, 'account_check_writing', 'view_account_check_write')
+            form_view = model_data.get_object_reference(cr, uid, 'account_check_writing_jam', 'view_account_check_write')
             value = {
                 'name': _('Print Check'),
                 'view_type': 'form',
